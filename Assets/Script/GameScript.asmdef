@@ -1,13 +1,17 @@
 {
     "name": "GameScript",
     "references": [
-        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
+        "UniRx",
+        "Unity.Entities",
+        "Unity.Mathematics"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
-    "precompiledReferences": [],
+    "precompiledReferences": [
+        ""
+    ],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
