@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BinaryTree:IEnumerable<int>
+public class BinaryTree
 {
     private BinaryTreeNode<int> root;
     public BinaryTreeNode<int> Root => root;
-
- 
 
     public BinaryTree(int value)
     {
@@ -27,7 +25,7 @@ public class BinaryTree:IEnumerable<int>
         var header = root;
         Insert(value, header);
     }
-    private void Insert(int value,BinaryTreeNode<int> header)
+    private void Insert(int value, BinaryTreeNode<int> header)
     {
         if (value <= header.value)
         {
@@ -49,7 +47,7 @@ public class BinaryTree:IEnumerable<int>
             else
             {
                 Insert(value, header.right);
-            }   
+            }
         }
     }
     public BinaryTreeNode<int> GetNode(int number)
@@ -76,13 +74,47 @@ public class BinaryTree:IEnumerable<int>
         return ForwardRight(header).value;
     }
 
-    public IEnumerator<int> GetEnumerator()
+    public void DFS()
     {
-        throw new System.NotImplementedException();
+        var header = root;
+        
+        //DFSRecurrsion1(header);
+        DFSRecurrsion2(header);
+
+    }
+    /// <summary>
+    /// 这样子递归容易栈溢出
+    /// </summary>
+    /// <param name="header"></param>
+    private void DFSRecurrsion1(BinaryTreeNode<int> header)
+    {
+        if (header == null)
+        {
+            return;
+        }
+        Debug.Log(header.value);
+        DFSRecurrsion1(header.left);
+        DFSRecurrsion1(header.right);
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
+    private void DFSRecurrsion2(BinaryTreeNode<int> header)
     {
-        throw new System.NotImplementedException();
+        var visit = new Stack<BinaryTreeNode<int>>();
+        while (header != null)
+        {
+            visit.Push(header);
+            Debug.Log(header.value);
+      
+            if (header.left != null)
+            {
+                header = header.left;
+            }
+            else
+            {
+                var peek = visit.Pop();
+                var last = visit.Peek();
+                header = last.right; 
+            }
+        }
     }
 }
