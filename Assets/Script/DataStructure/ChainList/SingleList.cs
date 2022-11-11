@@ -4,22 +4,29 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 /// <summary>
-/// 自定义链表
+/// 自定义链表,空头链表
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class CusList<T>
+public class SingleList<T>
 {
     private T m_value;
 
-    private CusList<T> next;
-    public CusList(T val)
+    private SingleList<T> next;
+
+    private SingleListNode<T> start_header;
+
+    private int count;
+    public int Count =>count;
+
+    public SingleList()
     {
-        this.m_value = val;
+        start_header = new SingleListNode<T>();
     }
-    public CusList<T> Add(T val)
+    public SingleList<T> Add(T val)
     {
-        next = new CusList<T>(val);
-        return next;
+        // next = new SingleList<T>(val);
+        // return next;
+        return default;
     }
 
     public void RemoveAt(int index)
@@ -31,39 +38,24 @@ public class CusList<T>
 
     public void Insert(int index,T value)
     {
-        if (index == 0)
-        {
-            throw new System.Exception("index cannot be 0");
-        }
-        else
-        {
-            var before_node = GetNode(index - 1);
-            var after_node = GetNode(index + 1);
-            var new_node = new CusList<T>(value);
-            before_node.Next = new_node;
-            new_node.Next = after_node;
-        }
+        // if (index == 0)
+        // {
+        //     throw new System.Exception("index cannot be 0");
+        // }
+        // else
+        // {
+        //     var before_node = GetNode(index - 1);
+        //     var after_node = GetNode(index + 1);
+        //     var new_node = new SingleList<T>(value);
+        //     before_node.Next = new_node;
+        //     new_node.Next = after_node;
+        // }
     }
 
-    public CusList<T> Next
+    public SingleList<T> Next
     {
         get => next;
         set { next = value; }
-    }
-
-    public int Count
-    {
-        get
-        {
-            var counter = 1;
-            var header = this.next;
-            while (header != null)
-            {
-                counter++;
-                header = header.next;
-            }
-            return counter;
-        }
     }
 
     public T Value => this.m_value;
@@ -84,7 +76,7 @@ public class CusList<T>
             return header.Value;
         }
     }
-    public CusList<T> GetNode(int index)
+    public SingleList<T> GetNode(int index)
     {
         var header = this.next;
         for (int i = 0; i < index; i++)

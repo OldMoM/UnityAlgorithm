@@ -8,6 +8,12 @@ using UnityEngine;
 public class DoubleChainedNode<T> 
 {
     public T value;
+    /// <summary>
+    /// 前引用
+    /// </summary>
     public DoubleChainedNode<T> prev;
+    /// <summary>
+    /// 后引用
+    /// </summary>
     public DoubleChainedNode<T> next;
 }

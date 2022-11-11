@@ -1,23 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-/// <summary>
+﻿/// <summary>
 /// 双向链表
 /// </summary>
 public class DoubleChainList<T> 
-{
-    private DoubleChainedNode<T> empty_head;
+{   
+
+    /// <summary>
+    /// 头指针
+    /// </summary>
     private DoubleChainedNode<T> start_header;
+    /// <summary>
+    /// 尾指针
+    /// </summary>
     private DoubleChainedNode<T> end_header;
 
     private int count = 0;
 
     public DoubleChainList()
     {
-        empty_head = new DoubleChainedNode<T>();
-        start_header = empty_head;
-        end_header = empty_head;
+        start_header = new DoubleChainedNode<T>();
+        end_header = start_header;
     }
 
     public void Add(T value)
@@ -35,17 +36,13 @@ public class DoubleChainList<T>
 
     }
 
-    public void RemoveAt(int index)
-    {
-
-    }
     /// <summary>
     /// Forwards the search.
     /// </summary>
     /// <returns></returns>
     private T ForwardSearch(int index)
     {
-        DoubleChainedNode<T> temp_header = empty_head;
+        DoubleChainedNode<T> temp_header = start_header;
         for (int i = 0; i < index; i++)
         {
             if (temp_header.next != null)
@@ -72,7 +69,7 @@ public class DoubleChainList<T>
 
     private bool ShouldForwardSearch(int index)
     {
-        return index <= Mathf.FloorToInt(Count / 2);
+        return index <= Count<<1;
     }
 
     public T this[int index]
