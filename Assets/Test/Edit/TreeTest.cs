@@ -31,8 +31,17 @@ namespace Tests
             };
             var tree = new BinaryTree(array);
             Assert.AreEqual(tree.Max(), 22);
-
- 
+        }
+        [Test]
+        public void DFS(){
+            var tree = new BinaryTree(15);
+            tree.Insert(10);
+            tree.Insert(5);
+            tree.Insert(20);
+            tree.Insert(25);
+            tree.Insert(19);
+            tree.DFS();
+            Assert.Pass();
         }
     }
 }
