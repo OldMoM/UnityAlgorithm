@@ -9,24 +9,29 @@ using UnityEngine.Assertions;
 /// <typeparam name="T"></typeparam>
 public class CusList<T>
 {
-    private T m_value;
+    private ListNode<T> m_root;
+    private ListNode<T> m_end_header;
 
-    private CusList<T> next;
+    private int m_count;
+
     public CusList(T val)
     {
-        this.m_value = val;
+        m_root = new ListNode<T>(val);
+        m_end_header = m_root;
+        m_count++;
     }
-    public CusList<T> Add(T val)
+    public void Add(T val)
     {
-        next = new CusList<T>(val);
-        return next;
+        m_end_header.next = new ListNode<T>(val);
+        m_end_header = m_end_header.next;
+        m_count++;
     }
 
     public void RemoveAt(int index)
     {
         var before_node = this.GetNode(index - 1);
         var after_node = this.GetNode(index + 1);
-        before_node.Next = after_node;
+        before_node.next = after_node;
     }
 
     public void Insert(int index,T value)
@@ -39,61 +44,58 @@ public class CusList<T>
         {
             var before_node = GetNode(index - 1);
             var after_node = GetNode(index + 1);
-            var new_node = new CusList<T>(value);
-            before_node.Next = new_node;
-            new_node.Next = after_node;
+            var new_node = new ListNode<T>(value);
+            before_node.next = new_node;
+            new_node.next = after_node;
         }
     }
-
-    public CusList<T> Next
-    {
-        get => next;
-        set { next = value; }
-    }
-
     public int Count
     {
-        get
-        {
-            var counter = 1;
-            var header = this.next;
-            while (header != null)
-            {
-                counter++;
-                header = header.next;
-            }
-            return counter;
-        }
+        get => m_count;
     }
-
-    public T Value => this.m_value;
 
     public T this[int index]
     {
         get
         {
-            var header = this.next;
-            for (int i = 0; i < index; i++)
+            var header = m_root;
+            if (index == 0)
             {
+                return header.value;
+            }
+            else
+            {
+                for (int i = 1; i <= index; i++)
+                {
+                    header = header.next;
+                    if (i == index)
+                    {
+                        break;
+                    }
+                }
+
+            }
+            return header.value;
+        }
+    }
+    private ListNode<T> GetNode(int index)
+    {
+        var header = m_root;
+        if (index == 0)
+        {
+            return header;
+        }
+        else
+        {
+            for (int i = 1; i <= index; i++)
+            {
+                header = header.next;
                 if (i == index)
                 {
                     break;
                 }
-                if (i>0) header = header.next;
             }
-            return header.Value;
-        }
-    }
-    public CusList<T> GetNode(int index)
-    {
-        var header = this.next;
-        for (int i = 0; i < index; i++)
-        {
-            if (i == index)
-            {
-                break;
-            }
-            if (i > 0) header = header.next;
+
         }
         return header;
     }

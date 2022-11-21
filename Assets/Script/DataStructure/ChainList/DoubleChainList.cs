@@ -7,22 +7,27 @@ using UnityEngine;
 /// </summary>
 public class DoubleChainList<T> 
 {
-    private DoubleChainedNode<T> empty_head;
     private DoubleChainedNode<T> start_header;
     private DoubleChainedNode<T> end_header;
 
     private int count = 0;
+    private bool reversed = false;
 
     public DoubleChainList()
     {
-        empty_head = new DoubleChainedNode<T>();
-        start_header = empty_head;
-        end_header = empty_head;
+        start_header = new DoubleChainedNode<T>();
+        end_header = start_header;
     }
 
     public void Add(T value)
     {
         var new_node = new DoubleChainedNode<T>();
+
+        //if (count == 0)
+        //{
+        //    start_header = new_node;
+        //}
+
         new_node.value = value;
         end_header.next = new_node;
         new_node.prev = end_header;
@@ -44,8 +49,8 @@ public class DoubleChainList<T>
     /// </summary>
     /// <returns></returns>
     private T ForwardSearch(int index)
-    {
-        DoubleChainedNode<T> temp_header = empty_head;
+    { 
+        DoubleChainedNode<T> temp_header = start_header;
         for (int i = 0; i < index; i++)
         {
             if (temp_header.next != null)
@@ -53,7 +58,7 @@ public class DoubleChainList<T>
                 temp_header = temp_header.next;
             }
         }
-        return temp_header.value;
+        return temp_header.value;  
     }
 
     private T BackwardSearch(int index)
@@ -66,13 +71,12 @@ public class DoubleChainList<T>
                 temp_header = temp_header.prev;
             }
         }
-
         return temp_header.value;
     }
 
     private bool ShouldForwardSearch(int index)
     {
-        return index <= Mathf.FloorToInt(Count / 2);
+        return index <= Count >> 1;
     }
 
     public T this[int index]
@@ -83,4 +87,14 @@ public class DoubleChainList<T>
         }
     }
     public int Count => count;
+    /// <summary>
+    /// 反转链表只需要交换链表前后引用
+    /// </summary>
+    public void Reverse()
+    {
+        reversed = !reversed;
+        var temp = start_header;
+        start_header = end_header;
+        start_header = temp;
+    }
 }

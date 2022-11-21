@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BinaryTree
 {
-    private BinaryTreeNode<int> root;
+    protected BinaryTreeNode<int> root;
     public BinaryTreeNode<int> Root => root;
 
     public BinaryTree(int value)
@@ -20,11 +20,18 @@ public class BinaryTree
         }
     }
 
-    public void Insert(int value)
+    public BinaryTree() { }
+
+    /// <summary>
+    /// 一般插入
+    /// </summary>
+    /// <param name="value"></param>
+    public virtual void Insert(int value)
     {
         var header = root;
         Insert(value, header);
     }
+
     private void Insert(int value, BinaryTreeNode<int> header)
     {
         if (value <= header.value)
@@ -77,44 +84,33 @@ public class BinaryTree
     public void DFS()
     {
         var header = root;
-        
-        //DFSRecurrsion1(header);
-        DFSRecurrsion2(header);
-
+        DFSRecurrsion(header);
     }
+    public int Height => FindHeight(this.root);
+
     /// <summary>
     /// 这样子递归容易栈溢出
     /// </summary>
     /// <param name="header"></param>
-    private void DFSRecurrsion1(BinaryTreeNode<int> header)
+    private void DFSRecurrsion(BinaryTreeNode<int> header)
     {
         if (header == null)
         {
             return;
         }
         Debug.Log(header.value);
-        DFSRecurrsion1(header.left);
-        DFSRecurrsion1(header.right);
+        DFSRecurrsion(header.left);
+        DFSRecurrsion(header.right);
     }
 
-    private void DFSRecurrsion2(BinaryTreeNode<int> header)
+    protected int FindHeight(BinaryTreeNode<int> root)
     {
-        var visit = new Stack<BinaryTreeNode<int>>();
-        while (header != null)
+        if (root == null)
         {
-            visit.Push(header);
-            Debug.Log(header.value);
-      
-            if (header.left != null)
-            {
-                header = header.left;
-            }
-            else
-            {
-                var peek = visit.Pop();
-                var last = visit.Peek();
-                header = last.right; 
-            }
+            return -1;
         }
+        var left_height = FindHeight(root.left);
+        var right_height = FindHeight(root.right);
+        return Mathf.Max(left_height, right_height) + 1;
     }
 }

@@ -43,5 +43,24 @@ namespace Tests
             tree.DFS();
             Assert.Pass();
         }
+        [Test]
+        public void GetHeight()
+        {
+             //       10 
+             //   5       15
+             //4     8
+             //    7   9
+             //   6
+            var tree = new BinaryTree(10);
+            tree.Insert(5);
+            tree.Insert(15);
+            tree.Insert(4);
+            tree.Insert(8);
+            tree.Insert(7);
+            tree.Insert(9);
+            tree.Insert(6);
+
+            Assert.AreEqual(4, tree.Height);
+        }
     }
 }
