@@ -59,5 +59,21 @@ namespace Tests
             }
             Assert.AreEqual(17, double_list[18]);
         }
+        [Test]
+        public void Reverse()
+        {
+            var double_list = new DoubleChainList<int>();
+            for (int i = 0; i < 20; i++)
+            {
+                double_list.Add(i);
+            }
+            double_list.Reverse();
+            for (int i = 0; i < 20; i++)
+            {
+                Debug.Log(double_list[i]);
+            }
+
+            Assert.AreEqual(18, double_list[10]);
+        }
     }
 }
