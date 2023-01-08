@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SecondOrderDynamics : MonoBehaviour
 {
-    [Range(0,1000)]
+    [Range(1,100)]
     public float f;
-    [Range(0,10)]
+    [Range(0,5)]
     public float zeta;
     [Range(-5,5)]
     public float r;
@@ -54,7 +54,10 @@ public class SecondOrderDynamics : MonoBehaviour
         xd = (x - xp) / Time.fixedDeltaTime;
         xp = x;
         y = y + Time.fixedDeltaTime * yd;
-        yd = yd + Time.fixedDeltaTime * (x + K3 * xd - y - K1 * yd) / K2;
+
+        var k2_stable = Mathf.Max(K2, Time.fixedDeltaTime * Time.fixedDeltaTime / 4 + k1 / 2);
+
+        yd = yd + 1.2f*Time.fixedDeltaTime * (x + K3 * xd - y - K1 * yd) / k2_stable;
        
         return y;
     }
